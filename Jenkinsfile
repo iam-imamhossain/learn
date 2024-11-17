@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:latest' // Use a Node.js Docker image as the Jenkins agent
-            args '-u root'
+            args '-u root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     environment {
