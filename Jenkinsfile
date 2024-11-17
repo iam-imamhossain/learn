@@ -18,6 +18,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install Node.js dependencies
+                 sh 'docker --version' 
                 sh 'npm install'
             }
         }
