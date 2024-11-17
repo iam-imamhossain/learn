@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Clone the repository from GitHub
-                git 'https://github.com/iam-imamhossain/learn.git' // Replace with your repo URL
+                git branch: 'main', url: 'https://github.com/iam-imamhossain/learn.git' // Replace with your repo URL
             }
         }
         stage('Install Dependencies') {
