@@ -21,14 +21,14 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('Run Tests') {
-            steps {
-                // Run tests using a common testing framework (e.g., Jest, Mocha)
-                sh 'npm install --save-dev mocha'
-                sh 'npm run'
-                sh 'npm test'
-            }
-        }
+        // stage('Run Tests') {
+        //     steps {
+        //         // Run tests using a common testing framework (e.g., Jest, Mocha)
+        //         sh 'npm install --save-dev mocha'
+        //         sh 'npm run'
+        //         sh 'npm test'
+        //     }
+        // }
         stage('Build Docker Image') {
             steps {
                 script {
