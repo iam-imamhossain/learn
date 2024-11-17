@@ -2,6 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:14' // Use a Node.js Docker image as the Jenkins agent
+            args '-u root'
         }
     }
     environment {
