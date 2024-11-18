@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: myapp
-          image: imam2000/spelling_practice:v5
+          image: imam2000/spelling_practice:5
           ports:
             - containerPort: 5173
