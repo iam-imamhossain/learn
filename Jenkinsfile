@@ -37,7 +37,7 @@ pipeline {
                     sh 'docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .'
 
                     def dockerImage = docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}")
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker_token') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker_id') {
                         dockerImage.push()
                     }
                 }
