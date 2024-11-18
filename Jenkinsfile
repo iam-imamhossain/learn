@@ -18,7 +18,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install Node.js dependencies
-                 sh 'docker --version' 
+                sh 'docker --version'
                 sh 'npm install'
             }
         }
@@ -35,22 +35,23 @@ pipeline {
                 script {
                     // Build Docker image
                     sh 'docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .'
-                    withDockerRegistry([credentialsId: 'docker_id']) {
+                    
+                    withDockerRegistry([credentialsId: 'docker_token']) {
                         sh 'docker push $DOCKER_IMAGE:${BUILD_NUMBER}'
                     }
                 }
             }
         }
-        // stage('Push Docker Image') {
-        //     steps {
-        //         script {
-        //             // Authenticate and push the Docker image
-        //             withDockerRegistry([credentialsId: 'docker_id']) {
-        //                 sh 'docker push $DOCKER_IMAGE:${BUILD_NUMBER}'
-        //             }
-        //         }
-        //     }
-        // }
+    // stage('Push Docker Image') {
+    //     steps {
+    //         script {
+    //             // Authenticate and push the Docker image
+    //             withDockerRegistry([credentialsId: 'docker_id']) {
+    //                 sh 'docker push $DOCKER_IMAGE:${BUILD_NUMBER}'
+    //             }
+    //         }
+    //     }
+    // }
     }
     post {
         always {
