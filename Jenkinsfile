@@ -35,9 +35,10 @@ pipeline {
                 script {
                     // Build Docker image
                     sh 'docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .'
-                    
-                    withDockerRegistry([credentialsId: 'docker_token']) {
-                        sh 'docker push $DOCKER_IMAGE:${BUILD_NUMBER}'
+
+                    def dockerImage = docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}")
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker_token') {
+                        dockerImage.push()
                     }
                 }
             }
