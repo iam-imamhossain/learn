@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker {
-            image 'node:latest' // Use a Node.js Docker image as the Jenkins agent
+            image 'imam2000/node-agent:v1' // Use a Node.js Docker image as the Jenkins agent
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 // Install Node.js dependencies
                  sh 'docker --version' 
-                sh 'npm install'
+                 sh 'npm install'
             }
         }
         // stage('Run Tests') {
