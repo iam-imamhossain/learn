@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spelling-apps
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spelling
+  template:
+    metadata:
+      labels:
+        app: spelling
+    spec:
+      containers:
+        - name: myapp
+          image: imam2000/spelling_practice:v5
+          ports:
+            - containerPort: 5173
