@@ -34,6 +34,11 @@ pipeline {
                 }
             }
         }
+        stage('show files in directory') {
+            steps {
+                sh 'ls -ltr'
+            }
+        }
        stage('Update Deployment File') {
             environment {
                 GIT_REPO_NAME = "learn"
