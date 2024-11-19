@@ -54,7 +54,7 @@ pipeline {
                         sed -i "s/image: imam2000\\/spelling_practice:.*/image: imam2000\\/spelling_practice:${BUILD_NUMBER}/" deployment/deployment.yaml
                         git add . deployment/deployment.yaml
                         git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:office
                     '''
                 }
             }
