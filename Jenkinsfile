@@ -18,18 +18,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install Node.js dependencies
-                sh 'docker --version'
                 sh 'npm install'
             }
         }
-        // stage('Run Tests') {
-        //     steps {
-        //         // Run tests using a common testing framework (e.g., Jest, Mocha)
-        //         sh 'npm install --save-dev mocha'
-        //         sh 'npm run'
-        //         sh 'npm test'
-        //     }
-        // }
         stage('Build Docker Image') {
             steps {
                 script {
@@ -37,22 +28,31 @@ pipeline {
                     sh 'docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .'
 
                     def dockerImage = docker.image("${DOCKER_IMAGE}:${BUILD_NUMBER}")
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker_id') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker_officer') {
                         dockerImage.push()
                     }
                 }
             }
         }
-    // stage('Push Docker Image') {
-    //     steps {
-    //         script {
-    //             // Authenticate and push the Docker image
-    //             withDockerRegistry([credentialsId: 'docker_id']) {
-    //                 sh 'docker push $DOCKER_IMAGE:${BUILD_NUMBER}'
-    //             }
-    //         }
-    //     }
-    // }
+       stage('Update Deployment File') {
+            environment {
+                GIT_REPO_NAME = "learn"
+                GIT_USER_NAME = "iam-imamhossain"
+            }
+            steps {
+                withCredentials([string(credentialsId: 'git-token', variable: 'GITHUB_TOKEN')]) {
+                    sh '''
+                        git config user.email "mdnazmulhashan@gmail.com"
+                        git config user.name "iam-imamhossain"
+                        BUILD_NUMBER=${BUILD_NUMBER}
+                        sed -n 's/image: imam2000/spelling_practice:\([^ ]*\).*/\${BUILD_NUMBER}/p' deployment/deployment.yaml
+                        git add . deployment/deployment.yml
+                        git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                    '''
+                }
+            }
+        }
     }
     post {
         always {
