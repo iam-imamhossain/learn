@@ -37,6 +37,7 @@ pipeline {
         stage('show files in directory') {
             steps {
                 sh 'ls -ltr'
+                sh  'ls -ltr deployment'
             }
         }
        stage('Update Deployment File') {
